@@ -13,6 +13,9 @@ module.exports = {
         complementaryYellow: '#FCBF49',
         grayBorder: '#E4EFF9',
         grayBg: '#F4F4F4'
+      },
+      spacing: {
+        '480': '480px'
       }
     }
   },

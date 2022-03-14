@@ -38,6 +38,7 @@ export default function NigerianStatesDd({ setShowDd, setGrabbedState }) {
                         </div>
                         <div className='mt-4 w-full'>
                             <input
+                                aria-label="search states"
                                 type='text'
                                 placeholder = 'Search'
                                 value = {searchedTerm}

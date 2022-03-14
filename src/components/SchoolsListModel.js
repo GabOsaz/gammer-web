@@ -2,63 +2,31 @@ import React, { useContext, useEffect, useState } from 'react'
 import GradientButton from '../components/common/GradientButton';
 import PageTitle from '../components/common/PageTitle';
 import { AnimatePresence, motion } from 'framer-motion'
-// import { publicFetch } from '../util/fetch';
 import { FetchContext } from '../context/FetchContext';
-import Hyperlink from './common/Hyperlink';
+import Loader from './common/Loader';
+import NotificationPrompt from './NotificationPrompt';
+import EmptyContent from './EmptyContent';
 
-export const registeredSchoolsData = [
-    {
-        id: '1',
-        schoolName: 'School One',
-        state: 'Edo',
-        yearFounded: '1992',
-        gameMasterName: 'Akpos',
-        gameMasterEmail: 'akpos1@gmail.com',
-        gameMasterPhone: '090284783347'
-    },
-    {
-        id: '2',
-        schoolName: 'School Two',
-        state: 'Ebonyi',
-        yearFounded: '1992',
-        gameMasterName: 'Akpos',
-        gameMasterEmail: 'akpos2@gmail.com',
-        gameMasterPhone: '090284783347'
-    },
-    {
-        id: '3',
-        schoolName: 'School Three',
-        state: 'Calabar',
-        yearFounded: '1992',
-        gameMasterName: 'Akpos',
-        gameMasterEmail: 'akpos3@gmail.com',
-        gameMasterPhone: '090284783347'
-    }
-];
 function SchoolsListModel({ accepted }) {
     const fetchContext = useContext(FetchContext);
 
     const [ isAccepted, setIsAccepted ] = useState(false);
-    // const [ currSchoolId, setCurrSchoolId ] = useState('');
+    const [ promptMessage, setPromptMessage ] = useState('')
     const [ showSchBodyId, setShowSchBodyId ] = useState([]);
     const [ accordionClickedId, setAccordionClickedId] = useState('');
     const [ loading, setLoading ] = useState(false);
     const [ registeredSchools, setRegisteredSchools ] = useState([]);
     const [ fetchError, setFetchError ] = useState('');
 
-    console.log(registeredSchools)
-
     useEffect(() => {
         const fetchRegisteredSchools = async () => {
             try {
                 setLoading(true);
                 const { data } = await fetchContext.authAxios.get('registered_schools');
-                console.log(data)
                 setLoading(false);
                 setRegisteredSchools(data.registeredSchools.filter(school => accepted ? school.accepted : !school.accepted))
             } catch (error) {
                 setLoading(false);
-                // console.log(error.response.status, error.response)
                 const { data, status, statusText } = error.response;
                 if(status < 500) {
                     setFetchError(data.message ? data.message : statusText);
@@ -76,7 +44,6 @@ function SchoolsListModel({ accepted }) {
     }, [fetchContext.authAxios, isAccepted, accepted])
 
     const acceptRequest = async (id) => {
-        console.log(!accepted)
 
         try {
           await fetchContext.authAxios.patch(
@@ -86,6 +53,7 @@ function SchoolsListModel({ accepted }) {
                 id
             }
           );
+          setPromptMessage('Action Successful!')
           setIsAccepted(!isAccepted)
         } catch (err) {
             console.log(err)
@@ -180,20 +148,31 @@ function SchoolsListModel({ accepted }) {
 
   return (
     <div>
+        <AnimatePresence>
+            {promptMessage &&
+                <NotificationPrompt handleClose={setPromptMessage} promptMessage={promptMessage} />
+            }
+        </AnimatePresence>
         <PageTitle title="Registered Schools" />
         {loading && 
-            <h1> Loading... </h1>
+            <div className='flex items-center justify-center'> 
+                <Loader />
+            </div>
         }
-        {!loading && !fetchError && registeredSchools.length > 0 ? registeredSchools.map(school => {
-            return (
-                <Accordion key={school._id} school={school} />
-            )}) : !loading && !fetchError && accepted ? (
-                <div className='flex flex-col items-center justify-center'>
-                    <h2 className='mr-1'> No accepted schools yet. </h2>
-                    <h2>Accept schools <Hyperlink to={'registeredSchools'} text='here' /> </h2>
-                </div>
-            ) : !loading && !accepted && !fetchError &&
-                <h2 className='flex items-center justify-center w-full'> No registered schools yet. The list of registered schools would be here, just push out some more adds </h2>
+        {!loading && !fetchError && registeredSchools.length > 0 ? 
+            registeredSchools.map(school => {
+                return (
+                    <Accordion key={school._id} school={school} />
+                )}) : 
+                !loading && !fetchError && accepted ? (
+                    <EmptyContent 
+                        acceptedSchEmpty
+                    />
+                ) : 
+                !loading && !accepted && !fetchError &&
+                    <EmptyContent 
+                        message='Sorry, no registered schools yet. Maybe push out more adds.' 
+                    />
         }
         {fetchError && 
             <h1> {fetchError} </h1>

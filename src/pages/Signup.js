@@ -7,25 +7,19 @@ import GradientButton from '../components/common/GradientButton';
 import HyperText from '../components/common/HyperText';
 import Label from '../components/common/Label';
 import FormInput from '../components/FormInput';
-// import GradientBar from './../components/common/GradientBar';
 import FormError from './../components/FormError';
 import FormSuccess from './../components/FormSuccess';
-// import logo from './../images/logo.png';
 import { publicFetch } from './../util/fetch';
 import { AuthContext } from '../context/AuthContext'
 import Login from './Login';
 import DismissDd from '../components/common/DismissDd';
 import NigerianStatesDd from '../components/NigerianStatesDd';
-// import Input from '../components/common/Input';
 import { motion } from 'framer-motion'
 
 const SignupSchema = Yup.object().shape({
   schoolName: Yup.string().required(
     'School name is required'
   ),
-  // state: Yup.string().required(
-  //   'State is required'
-  // ),
   year: Yup.string().required(
     'Year is required'
   ),
@@ -48,7 +42,6 @@ const Signup = () => {
   const [signupSuccess, setSignupSuccess] = useState();
   const [signupError, setSignupError] = useState();
   const [loginLoading, setLoginLoading] = useState(false);
-  // const [redirectOnLogin, setRedirectOnLogin] = useState(false);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [showDd, setShowDd] = useState(false);
   const [grabbedState, setGrabbedState] = useState('')
@@ -61,18 +54,11 @@ const Signup = () => {
       setLoginLoading(true);
       const { data } = await publicFetch.post('register_school', newCredentials);
       authContext.setAuthState(data);
-      console.log(data);
       setSignupSuccess(data.message);
       setSignupError('');
       setLoginLoading(false);
-
-      // redirect after successful signup
-      // setTimeout(() => {
-      //   setRedirectOnLogin(true)
-      // }, 700)  
     } catch (error) {
       setLoginLoading(false);
-      console.log(error.response.status, error.response)
       setSignupSuccess(null);
       const { data, status, statusText } = error.response;
       if(status < 500) {
@@ -85,13 +71,10 @@ const Signup = () => {
 
   return (
     <>
-      {/* {redirectOnLogin && <Redirect to="/dashboard"/>} */}
       {
-      <motion.section className="formDimentions m-auto sm:pt-8 relative" layoutId="underline">
-      {/* <section className="w-1/2 h-screen m-auto p-8 sm:pt-10"> */}
-        {/* <GradientBar /> */}
+      <motion.section className="lg:w-480 lg:m-auto sm:pt-8 lg:pr-6 relative" layoutId="underline">
         <Card>
-          <div className=''>
+          <div className='w-full flex justify-center'>
           <div className="flex items-center h-full overflow-y-auto justify-center py-12 px-4 w-full sm:px-6 lg:px-8">
             {showAdminLogin ?
             <Login showLogin = {setShowAdminLogin} /> :
@@ -153,8 +136,8 @@ const Signup = () => {
                         </div>
                         <div onClick={() => setShowDd(true)}>
                           <input
-                            // ariaLabel="State"
-                            // name="state"
+                            aria-label="State"
+                            name="state"
                             type="text"
                             value={grabbedState}
                             placeholder="Select state"
@@ -200,7 +183,7 @@ const Signup = () => {
                           <Label text="Game Master Phone Number" />
                         </div>
                         <FormInput
-                          ariaLabel="PhoneNumber"
+                          ariaLabel="Phone number"
                           name="phoneNumber"
                           type="text"
                           placeholder="Type phone number"

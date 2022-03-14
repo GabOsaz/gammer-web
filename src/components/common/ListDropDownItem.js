@@ -34,7 +34,7 @@ const ListDropDownItem = ({
                 <div className='py-0'>
                     {listArray && listArray.length > 0 && listArray.map((item, index, array) => {
                         return (
-                            <div key={index} onClick={() => handleClick(typeof(item) === 'object' ? item : item)} onMouseOver={() => handleMouseOver(item, index, array)} onMouseOut={() => handleMouseOut(item)} className={`flex w-full ${item === hover && border} border-blue-700 `}>
+                            <div id='some-state' key={index} onClick={() => handleClick(typeof(item) === 'object' ? item : item)} onMouseOver={() => handleMouseOver(item, index, array)} onMouseOut={() => handleMouseOut(item)} className={`flex w-full ${item === hover && border} border-blue-700 `}>
                                 <div className={`w-full px-6 py-1 text-opacity-70 cursor-pointer ${extraClasses} flex items-center justify-between space-x-2 hover:bg-blue-100 hover:text-opacity-100  transition duration-200 ease-in-out`}>
                                     <div className='flex items-center'>
                                         <span>

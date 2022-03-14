@@ -40,7 +40,7 @@ function FixGame() {
         
         return (
             <div className="mb-2 relative">
-                <div onClick={() => toggleShowDd()}>
+                <div id={id} onClick={() => toggleShowDd()}>
                     <input
                         aria-label="Schools"
                         name="school"

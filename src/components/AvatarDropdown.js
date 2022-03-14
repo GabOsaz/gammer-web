@@ -71,8 +71,9 @@ const AvatarDropdown = () => {
     <div ref={node}>
       <button
         ref={node}
-        className="flex rounded-full items-center py-2 px-3 bg-gradient focus:outline-none shadow-lg"
+        className="flex z-20 rounded-full items-center py-2 px-3 bg-gradient focus:outline-none shadow-lg"
         onClick={() => setDropdownOpen(!dropdownOpen)}
+        id='logout'
       >
         <img
           src={authState.userInfo.avatar || defaultAvatar}
@@ -88,7 +89,7 @@ const AvatarDropdown = () => {
       </button>
 
       {dropdownOpen && (
-        <div className="relative">
+        <div className="relative z-30">
           <DropdownContent dropdownItems={dropdownItems} />
         </div>
       )}

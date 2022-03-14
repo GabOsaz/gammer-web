@@ -68,6 +68,7 @@ function Fixtures() {
         <motion.ul 
             variants={childVariants}
             className='mt-6'
+            id='fixtures-list'
         >
             {data?.map(game => {
                 return (
@@ -75,6 +76,7 @@ function Fixtures() {
                         variants={childVariants}
                         whileHover={{ scale: 1.3, originX: 0, color: '#3B82F6' }}
                         className='mb-4'
+                        key={game._id}
                     >
                         {game.fixture} 
                     </motion.li>

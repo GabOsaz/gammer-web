@@ -8,7 +8,6 @@ const { Provider } = AuthContext;
 const AuthProvider = ({ children }) => {
   const history = useHistory();
 
-  // const token = localStorage.getItem('token');
   const userInfo = localStorage.getItem('userInfo');
 
   const expiresAt = localStorage.getItem('expiresAt');
@@ -20,7 +19,6 @@ const AuthProvider = ({ children }) => {
 
   const setAuthInfo = ({ token, userInfo, expiresAt }) => {
     localStorage.setItem('token', token);
-    // localStorage.setItem('userInfo', JSON.stringify(userInfo));
     localStorage.setItem('expiresAt', expiresAt);
     setAuthState({
       token,
