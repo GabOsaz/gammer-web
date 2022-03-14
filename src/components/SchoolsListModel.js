@@ -70,7 +70,7 @@ function SchoolsListModel({ accepted }) {
     }
 
     const AccorodionHead = ({ schoolName, id, accepted }) => (
-        <motion.div layoutId="accordion" onClick = {() => onClickAccordionHead(id)} className='flex items-center justify-between cursor-pointer'>
+        <motion.div id='accordionId' layoutId="accordion" onClick = {() => onClickAccordionHead(id)} className='flex items-center justify-between cursor-pointer'>
             <h1 className='text-gray-800 text-opacity-50 font-semibold text-xl'> {schoolName} </h1>
             <GradientButton 
                 text={ accepted ? 'Accepted' : 'Accept?'}
