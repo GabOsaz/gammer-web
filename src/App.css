@@ -1,0 +1,48 @@
+::-webkit-scrollbar {
+  width: .1em;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(209, 204, 204);
+  border-radius: .6em;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer;
+  background-color: rgb(201, 194, 194);
+  overflow-y: scroll;
+}
+
+.opacity-10 {
+  opacity: 0.1;
+}
+
+.top-75 {
+  top: 75px
+}
+
+.nato-sans {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.formDimentions {
+  width: 480px;
+  max-height: 550px;
+}
+
+.myShadow {
+  box-shadow: 4px 4px 24px 4px rgba(71, 71, 71, 0.15);
+  /* box-shadow: -4px 4px 13px 4px rgba(118, 128, 135, 0.08); */
+}
+
+.max-h-96 {
+  max-height: 24rem;
+}
+
+.accordionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  grid-gap: 1rem;
+}
+
